@@ -14,7 +14,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: 'Hi! I\'m your AI travel assistant. I can help you find the best flights, trains, buses, hotels, and provide travel recommendations. What can I help you with today?',
+      content: 'Hi! I\'m your AI travel assistant from AI-Travellers. I can help you find the best flights, trains, buses, hotels, and provide travel recommendations. What can I help you with today?',
       timestamp: new Date()
     }
   ]);
@@ -32,7 +32,7 @@ export default function Chatbot() {
 
   const quickQuestions = [
     "Find me flights to Goa",
-    "Best time to visit Kerala?",
+    "Best hotels in Kerala?",
     "Train booking tips",
     "Budget travel ideas",
     "Hotel recommendations"
@@ -56,10 +56,11 @@ export default function Chatbot() {
     setTimeout(() => {
       const responses = [
         "I'd be happy to help you with that! Let me search for the best options for you. 🔍",
-        "Great question! Based on my travel database, I can recommend several excellent options for your trip. ✈️",
+        "Great question! Based on our travel database, I can recommend several excellent options for your trip. ✈️",
         "I can definitely assist you with that. Let me provide you with some personalized recommendations. 🎯",
         "That's a popular destination! Here are some insider tips and the best deals I found for you. 🌟",
-        "Perfect timing! I have some amazing travel options that match your preferences. Let me share the details. 🚀"
+        "Perfect timing! I have some amazing travel options that match your preferences. Let me share the details. 🚀",
+        "AI-Travellers has access to thousands of options! Here are the best matches for your request. 🏨"
       ];
       
       const randomResponse = responses[Math.floor(Math.random() * responses.length)];
@@ -111,7 +112,7 @@ export default function Chatbot() {
                 <span className="text-white text-lg">🤖</span>
               </div>
               <div>
-                <h3 className="font-bold text-white">TravelHub AI</h3>
+                <h3 className="font-bold text-white">AI-Travellers Assistant</h3>
                 <p className="text-blue-100 text-sm">Always here to help</p>
               </div>
             </div>

@@ -2,16 +2,19 @@
 
 import NavBar from "@/components/Navbar";
 import SearchForm from "@/components/SearchForm";
+import HotelSearch from "@/components/HotelSearch";
 import Chatbot from "@/components/Chatbot";
 import dynamic from "next/dynamic";
 import { AuthProvider } from "@/lib/auth";
 import { FakeDB } from "@/lib/database";
+import { useState } from "react";
 
 // ✅ MapView must be imported dynamically
 const MapView = dynamic(() => import("@/components/MapView"), { ssr: false });
 
 export default function Home() {
   const popularDestinations = FakeDB.getPopularDestinations();
+  const [activeSection, setActiveSection] = useState<'travel' | 'hotels'>('travel');
 
   return (
     <AuthProvider>
@@ -33,16 +36,42 @@ export default function Home() {
             <div className="text-center mb-16">
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 fade-in-up">
                 Explore the World with
-                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> AI</span>
+                <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent"> AI-Travellers</span>
               </h1>
               <p className="text-xl md:text-2xl text-blue-100 mb-8 max-w-3xl mx-auto fade-in-up">
-                Discover amazing destinations, book flights, trains, and buses with our AI-powered travel assistant
+                Discover amazing destinations, book flights, trains, buses, and hotels with our AI-powered travel platform
               </p>
             </div>
 
-            {/* Advanced Search Form */}
+            {/* Section Toggle */}
+            <div className="flex justify-center mb-8">
+              <div className="flex space-x-1 bg-white/10 rounded-2xl p-1">
+                <button
+                  onClick={() => setActiveSection('travel')}
+                  className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                    activeSection === 'travel'
+                      ? "bg-white text-purple-600 shadow-lg"
+                      : "text-white hover:bg-white/10"
+                  }`}
+                >
+                  🚀 Travel Booking
+                </button>
+                <button
+                  onClick={() => setActiveSection('hotels')}
+                  className={`px-8 py-3 rounded-xl font-semibold transition-all duration-200 ${
+                    activeSection === 'hotels'
+                      ? "bg-white text-purple-600 shadow-lg"
+                      : "text-white hover:bg-white/10"
+                  }`}
+                >
+                  🏨 Hotel Booking
+                </button>
+              </div>
+            </div>
+
+            {/* Search Forms */}
             <div className="max-w-4xl mx-auto">
-              <SearchForm />
+              {activeSection === 'travel' ? <SearchForm /> : <HotelSearch />}
             </div>
           </div>
         </div>
@@ -85,7 +114,7 @@ export default function Home() {
         <div className="py-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-4xl font-bold text-white mb-4">Why Choose TravelHub AI?</h2>
+              <h2 className="text-4xl font-bold text-white mb-4">Why Choose AI-Travellers?</h2>
               <p className="text-xl text-blue-200">Experience the future of travel booking</p>
             </div>
 

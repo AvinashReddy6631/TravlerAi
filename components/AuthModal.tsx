@@ -93,7 +93,7 @@ export default function AuthModal({ isOpen, onClose, initialMode = 'login' }: Au
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-3xl font-bold text-white">
-            {mode === 'login' ? 'Welcome Back' : 'Join TravelHub'}
+            {mode === 'login' ? 'Welcome Back' : 'Join AI-Travellers'}
           </h2>
           <button
             onClick={onClose}
