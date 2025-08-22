@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FakeDB, TravelOption } from "@/lib/database";
+import { useAuth } from "@/lib/auth";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -18,6 +19,7 @@ export default function PaymentModal({
   passengers = 1,
   onPaymentSuccess 
 }: PaymentModalProps) {
+  const { user } = useAuth();
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'upi' | 'netbanking' | 'wallet'>('card');
   const [isProcessing, setIsProcessing] = useState(false);
   const [formData, setFormData] = useState({
@@ -34,7 +36,7 @@ export default function PaymentModal({
     walletType: 'paytm'
   });
 
-  if (!isOpen || !travelOption) return null;
+  if (!isOpen || !travelOption || !user) return null;
 
   const totalAmount = travelOption.price * passengers;
   const taxes = Math.round(totalAmount * 0.12);
@@ -53,13 +55,13 @@ export default function PaymentModal({
 
     // Simulate payment processing
     setTimeout(() => {
-      // Create fake booking
+      // Create fake booking with the authenticated user
       const booking = FakeDB.createBooking({
-        userId: 'user1', // In real app, get from auth context
+        userId: user.id,
         travelOptionId: travelOption.id,
         passengers: [
           {
-            name: 'John Doe',
+            name: user.name,
             age: 30,
             gender: 'male',
             idType: 'aadhar',
@@ -83,6 +85,17 @@ export default function PaymentModal({
       setIsProcessing(false);
       onPaymentSuccess(booking.id);
       onClose();
+      
+      // Reset form
+      setFormData({
+        cardNumber: '',
+        expiryDate: '',
+        cvv: '',
+        cardName: '',
+        upiId: '',
+        bankName: '',
+        walletType: 'paytm'
+      });
     }, 3000);
   };
 
@@ -153,6 +166,25 @@ export default function PaymentModal({
                     <span className="text-white">Total Amount</span>
                     <span className="text-white">₹{finalAmount.toLocaleString()}</span>
                   </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Passenger Info */}
+            <div className="glass p-6 rounded-2xl">
+              <h3 className="text-lg font-bold text-white mb-3">Passenger Details</h3>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-blue-200">Name:</span>
+                  <span className="text-white">{user.name}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-blue-200">Email:</span>
+                  <span className="text-white">{user.email}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-blue-200">Phone:</span>
+                  <span className="text-white">{user.phone}</span>
                 </div>
               </div>
             </div>
@@ -239,7 +271,7 @@ export default function PaymentModal({
                     <label className="text-white font-semibold text-sm">Cardholder Name</label>
                     <input
                       type="text"
-                      value={formData.cardName}
+                      value={formData.cardName || user.name}
                       onChange={(e) => updateFormData('cardName', e.target.value)}
                       placeholder="John Doe"
                       className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-200"
