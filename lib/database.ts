@@ -26,6 +26,42 @@ export interface TravelOption {
   stops?: string[];
 }
 
+export interface Hotel {
+  id: string;
+  name: string;
+  location: string;
+  city: string;
+  price: number;
+  rating: number;
+  images: string[];
+  amenities: string[];
+  roomType: string;
+  availableRooms: number;
+  description: string;
+  checkIn: string;
+  checkOut: string;
+  coordinates?: { lat: number; lng: number };
+}
+
+export interface HotelBooking {
+  id: string;
+  userId: string;
+  hotelId: string;
+  checkInDate: Date;
+  checkOutDate: Date;
+  guests: number;
+  rooms: number;
+  totalAmount: number;
+  status: 'confirmed' | 'pending' | 'cancelled';
+  paymentId: string;
+  createdAt: Date;
+  guestDetails: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+}
+
 export interface Booking {
   id: string;
   userId: string;
@@ -77,6 +113,123 @@ export const fakeUsers: User[] = [
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150',
     createdAt: new Date('2024-02-10'),
     bookings: ['booking3']
+  }
+];
+
+export const fakeHotels: Hotel[] = [
+  {
+    id: 'hotel1',
+    name: 'The Grand Palace Hotel',
+    location: 'Connaught Place',
+    city: 'Delhi',
+    price: 4500,
+    rating: 4.8,
+    images: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400'
+    ],
+    amenities: ['Free WiFi', 'Swimming Pool', 'Spa', 'Restaurant', 'Room Service', 'Gym'],
+    roomType: 'Deluxe Room',
+    availableRooms: 15,
+    description: 'Luxury hotel in the heart of Delhi with world-class amenities and service.',
+    checkIn: '2:00 PM',
+    checkOut: '12:00 PM',
+    coordinates: { lat: 28.6139, lng: 77.2090 }
+  },
+  {
+    id: 'hotel2',
+    name: 'Taj Palace Mumbai',
+    location: 'Colaba',
+    city: 'Mumbai',
+    price: 6200,
+    rating: 4.9,
+    images: [
+      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=400',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=400'
+    ],
+    amenities: ['Ocean View', 'Free WiFi', 'Restaurant', 'Bar', 'Concierge', 'Valet Parking'],
+    roomType: 'Premium Ocean View',
+    availableRooms: 8,
+    description: 'Iconic luxury hotel overlooking the Arabian Sea with unparalleled service.',
+    checkIn: '3:00 PM',
+    checkOut: '12:00 PM',
+    coordinates: { lat: 18.9220, lng: 72.8347 }
+  },
+  {
+    id: 'hotel3',
+    name: 'Leela Palace Bangalore',
+    location: 'HAL Old Airport Road',
+    city: 'Bangalore',
+    price: 5800,
+    rating: 4.7,
+    images: [
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=400',
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=400'
+    ],
+    amenities: ['Free WiFi', 'Spa', 'Multiple Restaurants', 'Business Center', 'Pool', 'Fitness Center'],
+    roomType: 'Royal Club Room',
+    availableRooms: 12,
+    description: 'Contemporary luxury hotel with traditional Indian hospitality and modern amenities.',
+    checkIn: '2:00 PM',
+    checkOut: '11:00 AM',
+    coordinates: { lat: 12.9716, lng: 77.5946 }
+  },
+  {
+    id: 'hotel4',
+    name: 'Goa Beach Resort',
+    location: 'Calangute Beach',
+    city: 'Goa',
+    price: 3200,
+    rating: 4.5,
+    images: [
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400',
+      'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=400'
+    ],
+    amenities: ['Beachfront', 'Swimming Pool', 'Restaurant', 'Bar', 'Water Sports', 'Free WiFi'],
+    roomType: 'Beach View Room',
+    availableRooms: 20,
+    description: 'Beachfront resort perfect for a relaxing vacation with stunning ocean views.',
+    checkIn: '2:00 PM',
+    checkOut: '11:00 AM',
+    coordinates: { lat: 15.5527, lng: 73.7640 }
+  },
+  {
+    id: 'hotel5',
+    name: 'Kerala Backwater Resort',
+    location: 'Alleppey',
+    city: 'Kerala',
+    price: 4200,
+    rating: 4.6,
+    images: [
+      'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400',
+      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=400'
+    ],
+    amenities: ['Backwater View', 'Ayurvedic Spa', 'Traditional Cuisine', 'Boat Rides', 'Free WiFi', 'Garden'],
+    roomType: 'Backwater Villa',
+    availableRooms: 10,
+    description: 'Serene resort nestled in Kerala backwaters offering authentic cultural experience.',
+    checkIn: '1:00 PM',
+    checkOut: '11:00 AM',
+    coordinates: { lat: 9.4981, lng: 76.3388 }
+  },
+  {
+    id: 'hotel6',
+    name: 'Rajasthan Heritage Hotel',
+    location: 'City Palace Area',
+    city: 'Rajasthan',
+    price: 3800,
+    rating: 4.4,
+    images: [
+      'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=400',
+      'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400'
+    ],
+    amenities: ['Heritage Architecture', 'Cultural Shows', 'Traditional Cuisine', 'Rooftop Restaurant', 'Free WiFi', 'Camel Rides'],
+    roomType: 'Royal Heritage Suite',
+    availableRooms: 6,
+    description: 'Experience royal Rajasthani hospitality in this beautifully restored heritage property.',
+    checkIn: '2:00 PM',
+    checkOut: '12:00 PM',
+    coordinates: { lat: 26.9124, lng: 75.7873 }
   }
 ];
 
@@ -196,6 +349,8 @@ export const fakeBookings: Booking[] = [
   }
 ];
 
+export const fakeHotelBookings: HotelBooking[] = [];
+
 export const fakePayments: Payment[] = [
   {
     id: 'payment1',
@@ -240,8 +395,22 @@ export class FakeDB {
     });
   }
 
+  static searchHotels(city: string, checkIn?: Date, checkOut?: Date, guests?: number): Hotel[] {
+    return fakeHotels.filter(hotel => {
+      const matchesCity = hotel.city.toLowerCase().includes(city.toLowerCase()) ||
+                         hotel.location.toLowerCase().includes(city.toLowerCase());
+      const hasAvailability = !guests || hotel.availableRooms >= Math.ceil(guests / 2); // Assuming 2 guests per room
+      
+      return matchesCity && hasAvailability;
+    });
+  }
+
   static getTravelOption(id: string): TravelOption | null {
     return fakeTravelOptions.find(option => option.id === id) || null;
+  }
+
+  static getHotel(id: string): Hotel | null {
+    return fakeHotels.find(hotel => hotel.id === id) || null;
   }
 
   static createBooking(bookingData: Omit<Booking, 'id' | 'createdAt'>): Booking {
@@ -261,6 +430,29 @@ export class FakeDB {
     return newBooking;
   }
 
+  static createHotelBooking(bookingData: Omit<HotelBooking, 'id' | 'createdAt'>): HotelBooking {
+    const newBooking: HotelBooking = {
+      ...bookingData,
+      id: `hotel_booking${fakeHotelBookings.length + 1}`,
+      createdAt: new Date()
+    };
+    fakeHotelBookings.push(newBooking);
+    
+    // Add booking to user
+    const user = fakeUsers.find(u => u.id === bookingData.userId);
+    if (user) {
+      user.bookings.push(newBooking.id);
+    }
+    
+    // Reduce available rooms
+    const hotel = fakeHotels.find(h => h.id === bookingData.hotelId);
+    if (hotel) {
+      hotel.availableRooms -= bookingData.rooms;
+    }
+    
+    return newBooking;
+  }
+
   static createPayment(paymentData: Omit<Payment, 'id' | 'createdAt'>): Payment {
     const newPayment: Payment = {
       ...paymentData,
@@ -273,6 +465,10 @@ export class FakeDB {
 
   static getUserBookings(userId: string): Booking[] {
     return fakeBookings.filter(booking => booking.userId === userId);
+  }
+
+  static getUserHotelBookings(userId: string): HotelBooking[] {
+    return fakeHotelBookings.filter(booking => booking.userId === userId);
   }
 
   static getPopularDestinations(): { name: string; image: string; price: number }[] {
